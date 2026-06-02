@@ -1,0 +1,9 @@
+{
+  "name": "tasksmind-ci-test",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Throwaway repo to exercise TasksMind GitHub CI failure ingestion (Path 1). CI fails on purpose.",
+  "scripts": {
+    "test": "node --test"
+  }
+}
