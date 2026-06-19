@@ -166,7 +166,7 @@ class Warehouse {
     const binsForSku = index[skuCode];
     // BUG: SKUs with zero bins are absent from binIndex(), so `binsForSku`
     // is undefined here and `.length` throws a TypeError at this line.
-    const binCount = binsForSku.length;
+    const binCount = (binsForSku || []).length;
     const locations = binsForSku.map((bin) => bin.id).join(", ");
     return `${sku.name}: ${this.onHand(skuCode)} units across ${binCount} bin(s) [${locations}]`;
   }
