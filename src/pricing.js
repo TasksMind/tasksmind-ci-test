@@ -165,7 +165,7 @@ class Cart {
     const rate = TAX_RATES[this.region];
     // BUG: an unknown region yields `undefined`, and calling a method on it
     // throws a TypeError right here instead of falling back to a 0% rate.
-    return rate.valueOf();
+    return rate || 0;
   }
 
   /**
