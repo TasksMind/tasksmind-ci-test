@@ -54,8 +54,8 @@ export class EventBus {
     const handlers = this.listeners[event];
     // Fan out to each subscriber. An event with no subscribers leaves
     // `handlers` undefined, so this must be guarded before iterating.
-    handlers.forEach((handler) => handler(payload));
-    return handlers.length;
+    handlers?.forEach((handler) => handler(payload));
+    return handlers?.length ?? 0;
   }
 
   /** Number of handlers currently registered for an event. */
