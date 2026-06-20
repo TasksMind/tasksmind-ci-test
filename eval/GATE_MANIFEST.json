@@ -1,0 +1,49 @@
+{
+  "corpus": "tasksmind-ci-test gate-corpus",
+  "purpose": "Go/no-go measurement gate for the A2A local test-driven fix loop (A0+A1). Each bug is single-file, has a green happy-path baseline that does NOT cover it, and is reproducible by a failing edge-case test (so the daemon's repro can fail-on-base -> pass-on-fix and the test gate reaches 'verified').",
+  "baseline": "node --test is all-green on this branch; the planted bug lives on an edge case no baseline test exercises.",
+  "bugs": [
+    {
+      "id": "GATE-01",
+      "module": "billing",
+      "title": "Billing summary crashes for an account with no invoices",
+      "description": "The nightly billing summary throws when it reaches a freshly-created account that has no invoices yet.\n\nTypeError: Cannot read properties of undefined (reading 'length')\n    at Ledger.summarizeAccount (src/billing.js:128:35)\n    at main (src/billing.js:164:31)",
+      "scoring": { "expected_file": "src/billing.js", "expected_symbol": "summarizeAccount", "edge_case": "account with zero invoices (A-4)", "kind": "single-file", "category": "missing-key-deref" }
+    },
+    {
+      "id": "GATE-02",
+      "module": "inventory",
+      "title": "Restock report crashes for a SKU with no bins",
+      "description": "The restock report fails when summarizing a registered SKU that has no bins allocated yet.\n\nTypeError: Cannot read properties of undefined (reading 'length')\n    at Warehouse.summarizeSku (src/inventory.js:167:33)\n    at main (src/inventory.js:231:27)",
+      "scoring": { "expected_file": "src/inventory.js", "expected_symbol": "summarizeSku", "edge_case": "SKU with zero bins (SPARE-99)", "kind": "single-file", "category": "missing-key-deref" }
+    },
+    {
+      "id": "GATE-03",
+      "module": "orders",
+      "title": "Fulfillment summary crashes for a customer with no orders",
+      "description": "The fulfillment summary throws on a newly onboarded customer who hasn't placed any orders.\n\nTypeError: Cannot read properties of undefined (reading 'length')\n    at FulfillmentBook.summarizeCustomer (src/orders.js:131:31)\n    at main (src/orders.js:168:29)",
+      "scoring": { "expected_file": "src/orders.js", "expected_symbol": "summarizeCustomer", "edge_case": "customer with zero orders (C-400)", "kind": "single-file", "category": "missing-key-deref" }
+    },
+    {
+      "id": "GATE-04",
+      "module": "pricing",
+      "title": "Checkout crashes for an order shipping to an unconfigured region",
+      "description": "Checkout fails to render a receipt when the cart ships to a region that has no configured tax rate.\n\nTypeError: Cannot read properties of undefined (reading 'valueOf')\n    at Cart.taxRate (src/pricing.js:166:17)\n    at Cart.taxCents (src/pricing.js:157:23)\n    at Cart.receipt (src/pricing.js:195:50)",
+      "scoring": { "expected_file": "src/pricing.js", "expected_symbol": "taxRate", "edge_case": "region absent from TAX_RATES (US-WA); expected behavior: fall back to 0% rate", "kind": "single-file", "category": "missing-key-deref" }
+    },
+    {
+      "id": "GATE-05",
+      "module": "scheduler",
+      "title": "Scheduler crashes when labeling a job that has no tags",
+      "description": "Printing the scheduling plan throws when a submitted job was created without any tags.\n\nTypeError: Cannot read properties of undefined (reading 'toUpperCase')\n    at Scheduler.jobTagLabel (src/scheduler.js:164:24)\n    at main (src/scheduler.js:197:51)",
+      "scoring": { "expected_file": "src/scheduler.js", "expected_symbol": "jobTagLabel", "edge_case": "job with an empty tags array", "kind": "single-file", "category": "empty-array-deref" }
+    },
+    {
+      "id": "GATE-06",
+      "module": "allocator",
+      "title": "Weighted budget over-allocates when there are leftover cents",
+      "description": "The weighted budget allocator hands out MORE money than the total when the weighted split leaves leftover cents. For a $100.01 budget split 50/30/20 the buckets sum to $100.03 and the reported leftover is negative (-2 cents). The parts must always sum back to the total.",
+      "scoring": { "expected_file": "src/allocator.js", "expected_symbol": "allocate (largest-remainder leftover pass)", "edge_case": "totalCents that does not divide evenly by weight (e.g. 10001)", "kind": "single-file", "category": "logic-off-by-loop", "note": "Hardest of the six: a silent logic bug with no stack trace; tests the loop fix + repro." }
+    }
+  ]
+}

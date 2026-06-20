@@ -163,8 +163,6 @@ class Cart {
    */
   taxRate() {
     const rate = TAX_RATES[this.region];
-    // BUG: an unknown region yields `undefined`, and calling a method on it
-    // throws a TypeError right here instead of falling back to a 0% rate.
     return rate.valueOf();
   }
 
@@ -207,7 +205,7 @@ function buildDemoCart() {
   const sticker = new Product("P-STICKER", "Logo Sticker", 199, { category: "swag" });
   const giftcard = new Product("P-GIFT", "Gift Card", 5000, { taxable: false });
 
-  // NOTE: the demo ships to a region that isn't in the TAX_RATES table.
+  // Demo order shipping to a Pacific-Northwest customer.
   const cart = new Cart("US-WA");
   cart.add(widget, 2).add(cable, 3).add(sticker, 5).add(giftcard, 1);
   cart.addCategoryPromo(new CategoryPromo("hardware", 10));

@@ -161,9 +161,6 @@ class Scheduler {
    * Used to annotate the scheduling plan.
    */
   jobTagLabel(job) {
-    // BUG: jobs submitted without tags have an empty `tags` array, so
-    // `tags[0]` is undefined and calling .toUpperCase() on it throws a
-    // TypeError at this line.
     return job.tags[0].toUpperCase();
   }
 }

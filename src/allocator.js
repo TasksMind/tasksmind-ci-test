@@ -191,9 +191,6 @@ class Allocator {
     }
 
     // Step 2: hand out the leftover cents to the largest remainders first.
-    // BUG: each leftover cent is added to *every* trailing bucket in the
-    // sorted list instead of to a single bucket, so we distribute far more
-    // than `leftover` cents and the plan over-allocates the budget.
     let leftover = totalCents - distributed;
     remainders.sort((a, b) => b.frac - a.frac);
     for (let i = 0; i < leftover; i++) {
@@ -311,8 +308,7 @@ function buildDemoAllocator() {
  */
 function main() {
   const allocator = buildDemoAllocator();
-  // $100.01 deliberately leaves a leftover cent so the largest-remainder
-  // pass has something to do.
+  // Allocate a representative marketing budget across the demo buckets.
   const plan = allocator.allocate(10001);
   process.stdout.write(plan.toReceipt() + "\n");
   process.stdout.write(`leftover: ${plan.leftoverCents} cent(s)\n`);

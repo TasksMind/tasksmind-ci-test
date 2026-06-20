@@ -125,8 +125,6 @@ class Ledger {
     const account = this.accounts.get(accountId);
     const index = this.invoicesByAccount();
     const invoices = index[accountId];
-    // BUG: accounts with zero invoices are absent from invoicesByAccount(), so
-    // `invoices` is undefined here and `.length` throws a TypeError at this line.
     const invoiceCount = invoices.length;
     const ids = invoices.map((inv) => inv.id).join(", ");
     const rate = Math.round(this.paidRate(accountId) * 100);
