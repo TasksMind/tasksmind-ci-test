@@ -160,10 +160,11 @@ class Cart {
 
   /**
    * Look up the configured tax rate for this cart's region.
+  /**
    */
   taxRate() {
     const rate = TAX_RATES[this.region];
-    return rate.valueOf();
+    return rate ? rate.valueOf() : 0;
   }
 
   /**
