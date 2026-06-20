@@ -163,7 +163,7 @@ class Warehouse {
   summarizeSku(skuCode) {
     const sku = this.skus.get(skuCode);
     const index = this.binIndex();
-    const binsForSku = index[skuCode];
+    const binsForSku = index[skuCode] ?? [];
     const binCount = binsForSku.length;
     const locations = binsForSku.map((bin) => bin.id).join(", ");
     return `${sku.name}: ${this.onHand(skuCode)} units across ${binCount} bin(s) [${locations}]`;
