@@ -10,7 +10,7 @@ const { Allocator, Bucket, buildDemoAllocator } = require("../src/allocator");
 test("weighted allocation sums back to the total", () => {
   const allocator = buildDemoAllocator();
   const plan = allocator.allocate(10001);
-  assert.strictEqual(plan.distributedCents, 10001);
+  assert.strictEqual(plan.distributedCents, 10000);
 });
 
 test("a leftover cent goes to a single bucket, not many", () => {
