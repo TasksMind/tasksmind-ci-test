@@ -161,7 +161,7 @@ class Scheduler {
    * Used to annotate the scheduling plan.
    */
   jobTagLabel(job) {
-    return job.tags[0].toUpperCase();
+    return job.tags?.[0]?.toUpperCase() || '';
   }
 }
 
