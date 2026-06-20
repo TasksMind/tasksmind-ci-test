@@ -125,7 +125,7 @@ class Ledger {
     const account = this.accounts.get(accountId);
     const index = this.invoicesByAccount();
     const invoices = index[accountId];
-    const invoiceCount = invoices.length;
+    const invoiceCount = invoices?.length || 0;
     const ids = invoices.map((inv) => inv.id).join(", ");
     const rate = Math.round(this.paidRate(accountId) * 100);
     return `${account.name} [${account.plan}]: ${invoiceCount} invoice(s) [${ids}], ${rate}% paid`;
