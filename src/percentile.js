@@ -169,7 +169,7 @@ class LatencyDigest {
     // sample (e.g. p99 of 20 samples → round(19.8) = 20), so this indexes one
     // past the end. `this._sorted[idx]` is then undefined and reading `.value`
     // throws a TypeError right here. The index must be clamped to [0, length-1].
-    const idx = Math.round((p / 100) * this._sorted.length);
+    const idx = Math.round((p / 100) * (this._sorted.length - 1));
     return this._sorted[idx].value;
   }
 
