@@ -115,7 +115,7 @@ class RollingMedian {
    */
   median() {
     const mid = Math.floor(this._sorted.length / 2);
-    return this._sorted[mid].value;
+    return this._sorted[mid]?.value;
   }
 
   /**
