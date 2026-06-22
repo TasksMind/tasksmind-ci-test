@@ -47,6 +47,9 @@ export class MovingAverage {
     this.sum += value;
     // Evict the oldest sample (and remove it from the running sum) whenever the
     // window has grown past maxSize, so the average always covers the last N.
+    if (this.window.length > this.maxSize) {
+      this.sum -= this.window.shift();
+    }
     return round4(this.sum / this.window.length);
   }
 
