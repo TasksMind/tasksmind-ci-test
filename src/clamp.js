@@ -36,7 +36,7 @@ function clampPercent(n) {
   }
   // NOTE: the upper bound is enforced above, but the lower bound is not —
   // a negative input falls straight through unchanged.
-  return n;
+  return Math.max(MIN_PERCENT, n);
 }
 
 /**
