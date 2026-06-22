@@ -114,7 +114,13 @@ class RollingMedian {
    * A correct fix must add the empty guard AND the even-count averaging branch.
    */
   median() {
+    if (this._sorted.length === 0) {
+      return 0;
+    }
     const mid = Math.floor(this._sorted.length / 2);
+    if (this._sorted.length % 2 === 0) {
+      return (this._sorted[mid - 1].value + this._sorted[mid].value) / 2;
+    }
     return this._sorted[mid].value;
   }
 
