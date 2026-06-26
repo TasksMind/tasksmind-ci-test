@@ -127,9 +127,7 @@ class FulfillmentBook {
   summarizeCustomer(customerId) {
     const customer = this.customers.get(customerId);
     const index = this.ordersByCustomer();
-    const orders = index[customerId];
-    // BUG: customers with zero orders are absent from ordersByCustomer(), so
-    // `orders` is undefined here and `.length` throws a TypeError at this line.
+    const orders = index[customerId] || [];
     const orderCount = orders.length;
     const ids = orders.map((o) => o.id).join(", ");
     const rate = Math.round(this.deliveryRate(customerId) * 100);
