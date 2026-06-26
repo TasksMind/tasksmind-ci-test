@@ -124,7 +124,7 @@ class Ledger {
   summarizeAccount(accountId) {
     const account = this.accounts.get(accountId);
     const index = this.invoicesByAccount();
-    const invoices = index[accountId];
+    const invoices = index[accountId] || [];
     // BUG: accounts with zero invoices are absent from invoicesByAccount(), so
     // `invoices` is undefined here and `.length` throws a TypeError at this line.
     const invoiceCount = invoices.length;
