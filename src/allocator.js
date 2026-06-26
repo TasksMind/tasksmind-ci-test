@@ -197,9 +197,7 @@ class Allocator {
     let leftover = totalCents - distributed;
     remainders.sort((a, b) => b.frac - a.frac);
     for (let i = 0; i < leftover; i++) {
-      for (let j = i; j < remainders.length; j++) {
-        shares[remainders[j].name] += 1;
-      }
+      shares[remainders[i].name] += 1;
     }
 
     // Step 3: enforce per-bucket minimums (best-effort; does not re-balance).
