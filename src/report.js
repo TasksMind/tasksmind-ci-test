@@ -23,6 +23,11 @@
  *   Memory  1024MB
  *   (2 metrics)
  *
+
+
+```
+```
+
  * A digest that truncates labels or misaligns the value column hides the metric
  * that matters during an incident, so every rule above is load-bearing.
  */
