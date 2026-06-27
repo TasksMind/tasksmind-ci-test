@@ -53,4 +53,4 @@ function renderReport(title, rows) {
   return out.join("\n");
 }
 
-module.exports = { renderReport };
+module.exports = { renderReport, buildReport: renderReport };
