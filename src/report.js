@@ -23,10 +23,12 @@
  *   Memory  1024MB
  *   (2 metrics)
  *
+
+
  * A digest that truncates labels or misaligns the value column hides the metric
  * that matters during an incident, so every rule above is load-bearing.
  */
-function renderReport(title, rows) {
+function renderReport(title, data) {
   // BUG: hand-rolled alignment that is wrong in several ways — a hard-coded
   // 10-char column, manual padding that TRUNCATES longer labels, a fixed-width
   // underline that ignores the title's length, no value-column alignment, and
