@@ -191,15 +191,12 @@ class Allocator {
     }
 
     // Step 2: hand out the leftover cents to the largest remainders first.
-    // BUG: each leftover cent is added to *every* trailing bucket in the
-    // sorted list instead of to a single bucket, so we distribute far more
-    // than `leftover` cents and the plan over-allocates the budget.
+    // Each leftover cent goes to exactly one bucket (the next-largest
+    // remainder), so the parts always add back up to the whole.
     let leftover = totalCents - distributed;
     remainders.sort((a, b) => b.frac - a.frac);
     for (let i = 0; i < leftover; i++) {
-      for (let j = i; j < remainders.length; j++) {
-        shares[remainders[j].name] += 1;
-      }
+      shares[remainders[i].name] += 1;
     }
 
     // Step 3: enforce per-bucket minimums (best-effort; does not re-balance).
