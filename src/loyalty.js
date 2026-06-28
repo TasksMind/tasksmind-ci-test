@@ -29,7 +29,7 @@ function levelFor(points) {
   }
   // The loop stops one past the matching level, so the applicable level is
   // the one just before `i`.
-  return LEVELS[i].name;
+  return LEVELS[i - 1].name;
 }
 
 module.exports = { levelFor, LEVELS };
