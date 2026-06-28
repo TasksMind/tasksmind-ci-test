@@ -6,11 +6,11 @@ const { priceAt } = require("./catalog");
 const TIER_NAMES = ["basic", "pro", "max"];
 
 /**
+
  * Price an order for the named tier, in cents.
  */
 function quoteFor(tierName) {
-  const idx = TIER_NAMES.indexOf(tierName) + 1;
+  const idx = TIER_NAMES.indexOf(tierName);
   return priceAt(idx);
 }
-
 module.exports = { quoteFor, TIER_NAMES };

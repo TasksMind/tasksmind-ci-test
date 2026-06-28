@@ -11,7 +11,7 @@ const PRICES = [
  * Return the price (in cents) for a 0-based tier index.
  */
 function priceAt(tierIndex) {
-  return PRICES[tierIndex + 1].cents;
+  return PRICES[tierIndex].cents;
 }
 
 module.exports = { priceAt, PRICES };
