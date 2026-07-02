@@ -5,5 +5,8 @@
   "description": "Throwaway repo to exercise TasksMind GitHub CI failure ingestion (Path 1). CI fails on purpose.",
   "scripts": {
     "test": "node --test"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.9"
   }
 }
